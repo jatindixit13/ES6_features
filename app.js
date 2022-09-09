@@ -225,3 +225,32 @@ const snickers = new Doggy("Snickers", "Pug");
 console.log(snickers);
 console.log(snickers.eat("chicken"));
 console.log(snickers.drink());
+//-------------------------------fetching data from third party-------------------
+const URL = "https://pokeapi.co/api/v2/pokemon?limit=50";
+
+// function to handle success
+function success() {
+  var data = JSON.parse(this.responseText); //parse the string to JSON
+  console.log(data);
+}
+
+// function to handle error
+function error(err) {
+  console.log("Request Failed", err); //error details will be in the "err" object
+}
+
+var xhr = new XMLHttpRequest(); //invoke a new instance of the XMLHttpRequest
+xhr.onload = success; // call success function if request is successful
+xhr.onerror = error; // call error function if request failed
+xhr.open("GET", URL); // open a GET request
+xhr.send(); // send the request to the server.
+
+//The Fetch API is a simpler, easy-to-use version of XMLHttpRequest to consume resources asynchronously. Fetch lets you work with REST APIs with additional options like caching data, reading streaming responses, and more.
+
+// The major difference is that Fetch works with promises, not callbacks.
+// GET Request.
+fetch(URL)
+  // Handle success
+  .then((response) => response.json()) // convert to json
+  .then((json) => console.log(json)) //print data to console
+  .catch((err) => console.log("Request Failed", err)); // Catch errors
